@@ -1,12 +1,23 @@
 import React from "react";
-import { Button, Checkbox, Form, Input } from "antd";
+ 
+import { Button,Form,Checkbox, Input,message } from "antd";
 import {Link} from 'react-router-dom'
 import '../resources/authentication.css'
- 
+import axios from 'axios';
 function Login() {
-  const onFinish = (values) => {
-    console.log(values);
+   
+   
+    const onFinish =async(values) => {
+      console.log(values);
+      try {
+        console.log(values);
+        await axios.post('/api/user/login',values);
+        message.success('Login successfull');
+      } catch (error) {
+        message.error('Loginfailed');
+      }
   };
+
   return (
     <div className="auth-parent" onFinish={onFinish}>
       <Form layout="vertical">
@@ -16,7 +27,7 @@ function Login() {
           <Input placeholder="usename" />
         </Form.Item>
         <Form.Item name="password" label="Password">
-          <Input />
+          <Input type='password' />
         </Form.Item>
         
          <div className="d-flex align-item-center justify-content-between">

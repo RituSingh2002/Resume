@@ -3,10 +3,14 @@ const express=require('express');
 const app=express.Router();
 app.post('/login',async(req,res)=>{
 try {
-  const result=await User.findOne({username:req.body.username,password:req.body.password}); 
-  if(result.length){
+  const result=
+  await User.findOne({username:req.body.username,password:req.body.password}); 
+  if(result){
       res.send('Login Successfull')
   } 
+  else{
+    res.status(400).json('Login failed');
+  }
 } catch (error) {
     res.status(400).json(error);
 }
